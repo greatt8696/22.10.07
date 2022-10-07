@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logInAction } from "../../redux/middleWare/loginAction";
 import {
   Button,
   ContentBtn,
@@ -12,6 +14,11 @@ import {
 const Header = () => {
   const idInput = useRef();
   const pwdInput = useRef();
+  const [inputs, setInputs] = useState({
+    id: "",
+    pwd: "",
+  });
+  const dispatch = useDispatch();
   const [wrapState, setWrapState] = useState(true);
   const nav = useNavigate();
   const setWrap = () => {
@@ -19,11 +26,11 @@ const Header = () => {
     idInput.current.value = "";
     pwdInput.current.value = "";
   };
-  const login = () => {
-    console.log(idInput, pwdInput);
-    idInput.current.value = "";
-    pwdInput.current.value = "";
-    setWrapState(false);
+  const login = () => dispatch(logInAction.logIn({ ...inputs }));
+  const signUp = () => dispatch(logInAction.signUp({ ...inputs }));
+  const inputHandler = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
   };
   return (
     <HeaderWrap>
@@ -35,11 +42,21 @@ const Header = () => {
         {wrapState ? (
           <>
             <label>아이디: </label>
-            <LoginInput ref={idInput} />
+            <LoginInput
+              name="id"
+              ref={idInput}
+              onChange={inputHandler}
+              value={idInput.id}
+            />
             <label>비밀번호: </label>
-            <LoginInput ref={pwdInput} />
+            <LoginInput
+              name="pwd"
+              ref={pwdInput}
+              onChange={inputHandler}
+              value={idInput.pwd}
+            />
             <Button onClick={login}>로그인</Button>
-            <Button onClick={login}>회원가입</Button>
+            <Button onClick={signUp}>회원가입</Button>
           </>
         ) : (
           <>
