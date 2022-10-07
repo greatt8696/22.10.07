@@ -10,8 +10,12 @@ const reducer = (state = initState, action) => {
   switch (type) {
     case "LOGIN":
       return { ...state, isLogin: true, id: payload.id, pwd: payload.pwd };
+    case "LOGOUT":
+      return { ...state, isLogin: false, id: "", pwd: "" };
 
     default:
       return state;
   }
 };
+
+export default reducer;
