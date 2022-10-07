@@ -4,6 +4,15 @@ const Button = styled.button`
   width: 100px;
   height: 30px;
   background-color: gray;
+  margin: 0;
+  padding: 0;
+  margin-left: 20px;
+  cursor: pointer;
+  :last-child {
+    width: 130px;
+  }
+  ::before {
+  }
 `;
 
 const HeaderWrap = styled.div`
@@ -27,4 +36,20 @@ const ContentBtn = styled.li`
   padding: 10px;
 `;
 
-export { Button, HeaderContent, HeaderWrap, ContentBtn };
+const LoginWrap = styled.div`
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  color: white;
+`;
+const LoginInput = styled.input`
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  margin: 0 10px;
+`;
+
+export { Button, HeaderContent, HeaderWrap, ContentBtn, LoginInput, LoginWrap };
