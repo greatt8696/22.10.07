@@ -39,6 +39,7 @@ const options = {
 };
 
 app.use(cors(options));
+
 app.use(express.json());
 
 app.post("/", (req, res) => {
@@ -46,6 +47,7 @@ app.post("/", (req, res) => {
   const { id, pwd } = req.body;
   res.send({ id, pwd });
 });
+
 app.post("/login", async (req, res) => {
   const { id, pwd } = req.body;
   const users = await User.findOne({
@@ -53,6 +55,7 @@ app.post("/login", async (req, res) => {
   });
   users ? res.send(id) : res.send(false);
 });
+
 app.post("/signUp", async (req, res) => {
   const { id, pwd } = req.body;
   const user = await User.findOne({
