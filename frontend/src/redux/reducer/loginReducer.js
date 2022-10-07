@@ -11,6 +11,7 @@ const reducer = (state = initState, action) => {
     case "LOGIN":
       return { ...state, isLogin: true, id: payload.id, pwd: payload.pwd };
     case "LOGOUT":
+      console.log("@@@@@@@@");
       return { ...state, isLogin: false, id: "", pwd: "" };
 
     default:

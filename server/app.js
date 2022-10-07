@@ -35,7 +35,7 @@ db.sequelize
  */
 
 const options = {
-  origin: `http://localhost:3001`, // 모든 곳 허용 origin: "*"
+  origin: `*`, // 모든 곳 허용 origin: "*"
 };
 
 app.use(cors(options));
@@ -45,6 +45,13 @@ app.post("/", (req, res) => {
   console.log(req.body);
   const { id, pwd } = req.body;
   res.send({ id, pwd });
+});
+app.post("/login", async (req, res) => {
+  const { id, pwd } = req.body;
+  const users = await User.findOne({
+    where: { user_id: id, user_pwd: pwd },
+  });
+  users ? res.send(id) : res.send(false);
 });
 app.post("/signUp", async (req, res) => {
   const { id, pwd } = req.body;

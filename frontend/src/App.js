@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Main, Shop } from "./page";
+import second from "react-redux";
 
 function App() {
   return (

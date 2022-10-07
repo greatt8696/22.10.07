@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logInAction } from "../../redux/middleWare/loginAction";
 import {
@@ -12,26 +12,34 @@ import {
 } from "./styledComponent";
 
 const Header = () => {
+  const nav = useNavigate();
   const idInput = useRef();
   const pwdInput = useRef();
   const [inputs, setInputs] = useState({
     id: "",
     pwd: "",
   });
+  const isLogin = useSelector((state) => state.loginReducer.isLogin);
+  const userId = useSelector((state) => state.loginReducer.id);
+
   const dispatch = useDispatch();
   const [wrapState, setWrapState] = useState(true);
-  const nav = useNavigate();
+
   const setWrap = () => {
     setWrapState(!wrapState);
     idInput.current.value = "";
     pwdInput.current.value = "";
   };
+
   const login = () => dispatch(logInAction.logIn({ ...inputs }));
+  const logOut = () => dispatch(logInAction.logOut({ ...inputs }));
   const signUp = () => dispatch(logInAction.signUp({ ...inputs }));
+
   const inputHandler = (e) => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
+
   return (
     <HeaderWrap>
       <HeaderContent>
@@ -39,7 +47,7 @@ const Header = () => {
         <ContentBtn onClick={() => nav("/shop")}>SHOP</ContentBtn>
       </HeaderContent>
       <LoginWrap>
-        {wrapState ? (
+        {!isLogin ? (
           <>
             <label>아이디: </label>
             <LoginInput
@@ -60,7 +68,8 @@ const Header = () => {
           </>
         ) : (
           <>
-            <p> 환영합니다.</p>
+            <p>{userId}님 환영합니다.</p>
+            <Button onClick={logOut}>로그아웃</Button>
           </>
         )}
       </LoginWrap>
